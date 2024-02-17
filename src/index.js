@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 
 const pizzaData = [
   {
@@ -48,11 +49,11 @@ const pizzaData = [
 
 function App() {
   return (
-    <>
+    <div className="container">
       <Header />
       <Menu />
       <Footer />
-    </>
+    </div>
   );
 }
 
@@ -60,21 +61,37 @@ function App() {
 
 function Header() {
   return (
-    <h1 style={{ color: "red", fontSize: "48px", textTransform: "uppercase" }}>
-      Fast React Pizza Co.
-    </h1>
+    <header className="header">
+      <h1>Fast React Pizza Co.</h1>
+    </header>
   );
 }
 
 function Menu() {
   return (
-    <>
+    <main className="menu">
       <h2>Our Menu</h2>
-      <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
-    </>
+     {pizzaData.map((data,index)=> 
+          <Pizza
+          name={data.name}
+          ingredients={data.ingredients}
+          photoName={data.photoName}
+          price={data.price}
+          />
+     )}
+    </main>
+  );
+}
+function Pizza(props) {
+  return (
+    <div className="pizza">
+      <img src={props.photoName} alt={props.name} />
+      <div>
+      <h3>{props.name}</h3>
+      <p>{props.ingredients}</p>
+      <span>{props.price + 3}</span>
+      </div>
+    </div>
   );
 }
 
@@ -92,15 +109,6 @@ function Footer() {
   );
 }
 
-function Pizza() {
-  return (
-    <>
-      <img src="pizzas/spinaci.jpg" alt="Pizza spinaci" />
-      <h2>Pizza Spinaci</h2>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-    </>
-  );
-}
 
 // Render Our app in the Dom in the The React Version 18
 const root = ReactDOM.createRoot(document.getElementById("root"));
