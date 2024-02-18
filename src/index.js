@@ -71,27 +71,34 @@ function Menu() {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-     {pizzaData.map((data,index)=> 
+
+      <ul className="pizzas">
+        
+      {pizzaData.map((data,index)=> 
           <Pizza
+          key={index}
           name={data.name}
           ingredients={data.ingredients}
           photoName={data.photoName}
           price={data.price}
           />
      )}
+
+      </ul>
+  
     </main>
   );
 }
 function Pizza(props) {
   return (
-    <div className="pizza">
+    <li className="pizza">
       <img src={props.photoName} alt={props.name} />
       <div>
       <h3>{props.name}</h3>
       <p>{props.ingredients}</p>
       <span>{props.price + 3}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
@@ -105,7 +112,14 @@ function Footer() {
   //  alert("We're currently open!"); else alert("Sorry We're closed")
 
   return (
-    <footer>{new Date().toLocaleTimeString()}.We're Currently open</footer>
+    <footer>
+      {isOpen && (
+        <div className="order">
+           <p>We're open until {closeHour}:00. Come visit us or order online.</p>
+           <button className="btn">Order</button>
+        </div>
+      )}
+      </footer>
   );
 }
 
