@@ -47,6 +47,8 @@ const pizzaData = [
   },
 ];
 
+const numPizza = pizzaData.length;
+
 function App() {
   return (
     <div className="container">
@@ -72,20 +74,28 @@ function Menu() {
     <main className="menu">
       <h2>Our Menu</h2>
 
-      <ul className="pizzas">
-        
-      {pizzaData.map((data,index)=> 
-          <Pizza
-          key={index}
-          name={data.name}
-          ingredients={data.ingredients}
-          photoName={data.photoName}
-          price={data.price}
-          />
-     )}
+      {numPizza > 0 ? (
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creative dishes to choose from. all
+            from our stone oven, all organic, all delicious.
+          </p>
 
-      </ul>
-  
+          <ul className="pizzas">
+            {pizzaData.map((data, index) => (
+              <Pizza
+                key={index}
+                name={data.name}
+                ingredients={data.ingredients}
+                photoName={data.photoName}
+                price={data.price}
+              />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>We're still working on our menu, Please come back later :)</p>
+      )}
     </main>
   );
 }
@@ -94,9 +104,9 @@ function Pizza(props) {
     <li className="pizza">
       <img src={props.photoName} alt={props.name} />
       <div>
-      <h3>{props.name}</h3>
-      <p>{props.ingredients}</p>
-      <span>{props.price + 3}</span>
+        <h3>{props.name}</h3>
+        <p>{props.ingredients}</p>
+        <span>{props.price + 3}</span>
       </div>
     </li>
   );
@@ -113,16 +123,29 @@ function Footer() {
 
   return (
     <footer>
-      {isOpen && (
-        <div className="order">
-           <p>We're open until {closeHour}:00. Come visit us or order online.</p>
-           <button className="btn">Order</button>
-        </div>
+      {isOpen ? (
+        <Order closeHour={closeHour} openHour={openHour} />
+      ) : (
+        <p>
+          We're happy to welcome you between {openHour}:00 and {closeHour}:00
+        </p>
       )}
-      </footer>
+    </footer>
   );
 }
 
+function Order({ closeHour, openHour }) {
+  console.log("CloseHour and OpenHour :-", closeHour, openHour);
+  return (
+    <div className="order">
+      <p>
+        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+        online.
+      </p>
+      <button className="btn">Order</button>
+    </div>
+  );
+}
 
 // Render Our app in the Dom in the The React Version 18
 const root = ReactDOM.createRoot(document.getElementById("root"));
