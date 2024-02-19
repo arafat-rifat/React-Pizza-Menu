@@ -85,10 +85,7 @@ function Menu() {
             {pizzaData.map((data, index) => (
               <Pizza
                 key={index}
-                name={data.name}
-                ingredients={data.ingredients}
-                photoName={data.photoName}
-                price={data.price}
+               pizzaObj ={data}
               />
             ))}
           </ul>
@@ -99,14 +96,15 @@ function Menu() {
     </main>
   );
 }
-function Pizza(props) {
+function Pizza({pizzaObj}) {
+  console.log(pizzaObj)
   return (
-    <li className="pizza">
-      <img src={props.photoName} alt={props.name} />
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ''}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
-        <span>{props.price + 3}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
